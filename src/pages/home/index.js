@@ -9,7 +9,6 @@ import {
 import { MessageList, MessageInput } from 'stream-chat-react';
 import { StreamChat } from 'stream-chat';
 
-import 'stream-chat-react/dist/css/index.css';
 import { AppContext } from '../../contexts';
 import { Redirect } from 'react-router-dom';
 
@@ -20,10 +19,10 @@ const Home = () => {
   const [channel, setChannel] = useState(undefined);
 
   const setUser = async ({ apiKey, user, token }) => {
-    const { results } = await (
+    const { results: people } = await (
       await fetch('https://randomuser.me/api/?inc=picture')
     ).json();
-    const [person] = results;
+    const [person] = people;
     const { picture } = person;
 
     chatClient = new StreamChat(apiKey);
@@ -42,7 +41,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    console.log(user);
     if (user) {
       setUser(user);
     }
@@ -53,7 +51,7 @@ const Home = () => {
   }
 
   return channel ? (
-    <div className='w-1/3 mx-auto'>
+    <div className='w-11/12 md:w-1/2 lg:w-1/3 mx-auto'>
       <Chat client={chatClient} theme={'messaging light'}>
         <Channel channel={channel}>
           <Window>
